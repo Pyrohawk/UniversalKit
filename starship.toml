@@ -1,0 +1,56 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# 1. GENERAL APPEARANCE
+# Inserts a blank line between shell prompts for readability
+add_newline = true
+
+# 2. THE PROMPT FORMAT
+# This defines the order of what you see (User > Directory > Git > Status)
+format = """
+[░▒▓](#9A348E)\
+[  ](bg:#9A348E fg:#ffffff)\
+[](fg:#9A348E bg:#803D9B)\
+$directory\
+[](fg:#803D9B bg:#3F8EFD)\
+$git_branch\
+$git_status\
+[](fg:#3F8EFD bg:#06969A)\
+$nodejs\
+$rust\
+$python\
+[](fg:#06969A bg:#33658A)\
+$time\
+[ ](fg:#33658A)\
+\n$character"""
+
+# 3. MODULE CONFIGURATION
+[directory]
+style = "bg:#803D9B fg:#ffffff"
+format = "[ $path ]($style)"
+truncation_length = 3
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+symbol = ""
+style = "bg:#3F8EFD fg:#ffffff"
+format = '[[ $symbol $branch ]($style)]'
+
+[git_status]
+style = "bg:#3F8EFD fg:#ffffff"
+format = '[[($all_status$ahead_behind )]($style)]'
+
+[nodejs]
+symbol = ""
+style = "bg:#06969A fg:#ffffff"
+format = '[[ $symbol ($version) ]($style)]'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute format
+style = "bg:#33658A fg:#ffffff"
+format = '[[ 󱑍 $time ]($style)]'
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
