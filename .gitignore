@@ -1,0 +1,8 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore the backup folders you create locally
+dotfiles_backup_*/
+
+# Ignore any local secret files
+.secrets
