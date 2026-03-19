@@ -43,3 +43,27 @@ fi
 # Instead of Oh My Zsh, we point directly to the plugin files
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# RESTORE FUNCTION
+# Finds the latest backup folder and restores the original files
+restore_dots() {
+    LATEST_BACKUP=$(ls -td ~/dotfiles_backup_* 2>/dev/null | head -n 1)
+    
+    if [ -z "$LATEST_BACKUP" ]; then
+        echo "❌ No backup folders found."
+        return 1
+    fi
+
+    echo "🔄 Restoring from $LATEST_BACKUP..."
+    
+    # Remove the symlinks
+    rm -f ~/.zshrc
+    rm -f ~/.config/starship.toml
+    
+    # Move the original files back
+    [ -f "$LATEST_BACKUP/.zshrc" ] && mv "$LATEST_BACKUP/.zshrc" ~/
+    [ -f "$LATEST_BACKUP/starship.toml" ] && mv "$LATEST_BACKUP/starship.toml" ~/.config/
+    
+    echo "✅ Original configuration restored. Please restart your terminal."
+}
+alias restore-my-terminal="restore_dots"
